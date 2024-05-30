@@ -10,6 +10,7 @@ import { Card } from "./Card";
 import { Stat } from "./Stat";
 import { Dice } from "./dice";
 import { useState } from "react";
+import { Card2 } from "./Card2";
 
 export const App = () => {
   const [title, setTitle] = useState("Dagger");
@@ -20,6 +21,7 @@ export const App = () => {
   const [range, setRange] = useState(true);
   const [rangeMin, setRangeMin] = useState(20);
   const [rangeMax, setRangeMax] = useState(60);
+  const [bonus, setBonus] = useState(0);
   return (
     <Box>
       <Box sx={{ my: 4 }}>
@@ -86,6 +88,13 @@ export const App = () => {
             />
           </>
         )}
+
+        <TextField
+          label="bonus"
+          type="number"
+          value={bonus}
+          onChange={(e) => setBonus(parseInt(e.target.value))}
+        />
       </Box>
       <Card
         title={title}
@@ -95,6 +104,31 @@ export const App = () => {
         touch={touch}
         range={range ? [rangeMin, rangeMax] : undefined}
         properties={["Finesse", "Light", "Range", "Thrown", "Simple"]}
+        effects={[
+          {
+            name: "Blood Frenzy",
+            description:
+              "After the weapon is used to kill 5 creatures, it grants a +2 to hit. After the weapon is used to kill 10 creatures it grants +1 extra attack. Bonuses last 10 turns. Killing another creature within the time limit resets the timer.",
+          },
+        ]}
+      />
+      <span style={{ margin: "20px" }} />
+      <Card2
+        name={title}
+        dmg={dmg}
+        stat={stat}
+        bonus={bonus}
+        touch={touch}
+        range={range ? [rangeMin, rangeMax] : undefined}
+        hands={hands}
+        properties={["Finesse", "Light", "Range", "Thrown", "Simple"]}
+        effects={[
+          {
+            name: "Blood Frenzy",
+            description:
+              "After the weapon is used to kill 5 creatures, it grants a +2 to hit. After the weapon is used to kill 10 creatures it grants +1 extra attack. Bonuses last 10 turns. Killing another creature within the time limit resets the timer.",
+          },
+        ]}
       />
     </Box>
   );

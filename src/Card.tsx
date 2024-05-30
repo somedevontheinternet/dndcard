@@ -12,6 +12,7 @@ import { Dice } from "./dice";
 
 import Touch from "./icons/distance/touch.svg";
 import Range from "./icons/distance/range.svg";
+import { Effect } from "./Effect";
 
 const diceImages = {
   [Dice.D4]: D4,
@@ -30,6 +31,7 @@ interface IProps {
   touch?: boolean;
   range?: [number, number];
   properties?: string[];
+  effects: Effect[];
 }
 
 export const Card = ({
@@ -40,6 +42,7 @@ export const Card = ({
   touch,
   range,
   properties,
+  effects,
 }: IProps) => (
   <Box
     sx={{
@@ -49,7 +52,6 @@ export const Card = ({
       display: "flex",
       alignItems: "center",
       border: "1px solid black",
-      padding: 2,
       flexDirection: "column",
     }}
   >
@@ -108,7 +110,6 @@ export const Card = ({
       <Box
         sx={{
           width: "50%",
-          height: "100%",
           display: "flex",
           flexDirection: "column",
         }}
@@ -129,11 +130,17 @@ export const Card = ({
           </Box>
         )}
         <Box sx={{ border: "1px solid black", flexGrow: 1, p: 1 }}>
-          {properties?.map((prop) => (
-            <Typography sx={{ fontSize: 12 }}>{prop}</Typography>
+          <Typography sx={{ fontSize: 10 }}>{properties?.join(" ")}</Typography>
+          {(effects ?? []).map((e) => (
+            <Typography component="span" fontSize={8}>
+              <Typography component="span" fontSize={8} fontWeight="bold">
+                {e.name}
+              </Typography>
+              : {e.description}
+            </Typography>
           ))}
         </Box>
-        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+        <Box sx={{ display: "flex", justifyContent: "flex-end", flexGrow: 1 }}>
           {new Array(hands).fill(
             <Icon>
               <img src={Hand} alt="" />
